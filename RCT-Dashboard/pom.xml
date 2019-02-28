@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<artifactId>RCT</artifactId>
+		<groupId>org.nesc.ecbd</groupId>
+		<version>2.0.0</version>
+	</parent>
+
+	<artifactId>RCT-Dashboard</artifactId>
+	<packaging>jar</packaging>
+
+	<name>RCT-Dashboard</name>
+	<url>http://maven.apache.org</url>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<java.version>1.8</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.nesc.ecbd</groupId>
+			<artifactId>RCT-Base</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.moilioncircle</groupId>
+			<artifactId>redis-replicator</artifactId>
+			<version>2.5.0</version>
+		</dependency>
+
+		<!-- spring boot and mybatis -->
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatisplus-spring-boot-starter</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.baomidou</groupId>
+			<artifactId>mybatis-plus</artifactId>
+			<version>2.2.0</version>
+		</dependency>
+		<!-- SQLITE -->
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+		</dependency>
+		<!-- eureka-server -->
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+		</dependency>
+		<!-- Excel -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>4.0.0</version>
+		</dependency>
+		<!-- Email -->
+		<dependency>
+			<groupId>javax.mail</groupId>
+			<artifactId>mail</artifactId>
+			<version>1.4.7</version>
+		</dependency>
+		<!-- Guava -->
+		<dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>23.0</version>
+		</dependency>
+
+
+		<!-- 定时器任务 quartz需要导入的坐标 -->
+		<dependency>
+			<groupId>org.quartz-scheduler</groupId>
+			<artifactId>quartz</artifactId>
+		</dependency>
+		
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>${java.version}</source>
+					<target>${java.version}</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>package.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>com.github.eirslett</groupId>
+					<artifactId>frontend-maven-plugin</artifactId>
+					<version>1.4</version>
+					<!-- optional -->
+					<configuration>
+						<workingDirectory>src/main/frontend</workingDirectory>
+					</configuration>
+					<executions>
+						<execution>
+							<id>install node and npm</id>
+							<goals>
+								<goal>install-node-and-npm</goal>
+							</goals>
+							<configuration>
+								<nodeVersion>v7.4.0</nodeVersion>
+								<npmVersion>4.0.5</npmVersion>
+							</configuration>
+						</execution>
+						<execution>
+							<id>npm install</id>
+							<goals>
+								<goal>npm</goal>
+							</goals>
+							<configuration>
+								<arguments>install</arguments>
+							</configuration>
+						</execution>
+						<execution>
+							<id>npm run build</id>
+							<goals>
+								<goal>npm</goal>
+							</goals>
+							<configuration>
+								<arguments>run build --production</arguments>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<groupId>com.newegg.ec2</groupId>
+					<artifactId>docker-maven-plugin</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<imageName>RCT-Dashboard</imageName>
+						<tag>1.0</tag>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+</project>

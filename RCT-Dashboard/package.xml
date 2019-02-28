@@ -1,0 +1,43 @@
+<assembly>
+	<id>release</id>
+	<formats>
+		<format>tar</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+
+		<fileSet>
+			<directory>${basedir}/db</directory>
+			<outputDirectory>db</outputDirectory>
+			<includes>
+				<include>*.db</include>
+			</includes>
+		</fileSet>
+		
+		<fileSet>
+			<directory>${project.basedir}/src/main/resources</directory>
+			<outputDirectory>config</outputDirectory>
+			<includes>
+				<include>application.properties</include>
+			</includes>
+		</fileSet>
+
+
+		<fileSet>
+			<directory>${project.build.directory}</directory>
+			<outputDirectory></outputDirectory>
+			<includes>
+				<include>*.jar</include>
+			</includes>
+		</fileSet>
+
+		<fileSet>
+			<directory>${basedir}/template</directory>
+			<outputDirectory>template</outputDirectory>
+			<includes>
+				<include>*.xlsx</include>
+			</includes>
+		</fileSet>
+
+	</fileSets>
+</assembly>
