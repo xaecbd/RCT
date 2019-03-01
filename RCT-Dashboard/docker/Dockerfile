@@ -11,7 +11,7 @@ ENV BASE_DIR /opt/app/rct/rct-dashboard
 WORKDIR ${BASE_DIR}
 ENV RCT_NAME RCT-Dashboard
 ENV VERSION 2.0.0
-RUN curl -fsSL -o ${BASE_DIR}/${RCT_NAME}-${VERSION}-release.tar.gz https://github.com/xaecdb/RCT/archive/${RCT_NAME}-${VERSION}-release.tar.gz && \
+RUN curl -fsSL -o ${BASE_DIR}/${RCT_NAME}-${VERSION}-release.tar.gz https://github.com/xaecbd/RCT/releases/download/v${VERSION}/${RCT_NAME}-${VERSION}-release.tar.gz && \
     cd ${BASE_DIR} && \
     tar xvf ${RCT_NAME}-${VERSION}-release.tar.gz && \
     rm -rf ${RCT_NAME}-${VERSION}-release.tar.gz
