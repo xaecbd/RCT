@@ -47,7 +47,7 @@ RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集�
     ```
     docker run -d  --net=host xaecbd/rct-dashboard:2.0.0
     ```
-  - 自定义配置
+  - 自定义配置(在执行之前，请先在宿主机上放置config/application.properties db/data.db)
     ```
     docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:2.0.0
     ```
@@ -56,7 +56,7 @@ RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集�
     ```
      docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:2.0.0
     ```
-  - 自定义配置
+  - 自定义配置(在执行之前，请先在宿主机上放置config/application.properties)
     ```
     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:2.0.0
     ```
