@@ -49,7 +49,7 @@ RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集�
     ```
   - 自定义配置
     ```
-    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -net=host xaecbd/rct-dashboard:2.0.0
+    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:2.0.0
     ```
 2. 启动分析器RCT-Analyze
   - 默认配置
@@ -58,7 +58,7 @@ RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集�
     ```
   - 自定义配置
     ```
-    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -net=host xaecbd/rct-analyze:2.0.0
+    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:2.0.0
     ```
     根据RDB大小，适当调整最大堆大小
 3. 进入系统
