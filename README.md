@@ -2,13 +2,13 @@
 
 ![](https://img.shields.io/badge/redis-%3E%3D2.6.0-green.svg) ![](https://img.shields.io/badge/SpringCloud--lightgrey.svg) ![](https://img.shields.io/badge/build-passing-yellow.svg)
 
-RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集群RDB、Slowlog、ClientList进行分析。   
+RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台。 支持对非集群/集群rdb文件分析、Slowlog查询与监控、ClientList查询与监控。
 
 
 ## 功能
 - 内存分析
 
-  >通过对RDB文件解析，分析Redis内存使用情况，支持多维度、多报表方式。支持手动、自动多种方式！
+  >通过对rdb文件解析，分析Redis内存使用情况，支持多维度、多报表方式。支持手动、自动多种方式！
   >提供生成报表、Redis key 导出等功能！
 
 - slowlog
