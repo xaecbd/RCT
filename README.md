@@ -23,7 +23,7 @@ RCT 是 redis对内部结构分析的一站式平台。 支持对非集群/集�
 ## 产品预览
 截屏部分主要介绍了rct的主要功能,一系列的流程，您可以了解到我们平台主要功能和适用场景。
 
-![](./doc/screenshots/rct.gif)
+![](./doc/screenshots/rct.jpg)
  
  ## 快速开始
 
