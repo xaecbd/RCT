@@ -27,21 +27,31 @@ RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台�
  
  ## 快速开始
 
- ### jre
+ ### jre（linux和windows）
  在开始之前，首先确保安装jre1.8+。
 
 1. 首选启动控制中心RCT-Dashboard
+    在release中下载发布包，如点击RCT-Dashboard-2.0.0-release.tar.gz下载，解压(windows下可用winRAR软件解压，linux下可用命令
+    ```
+      tar xvf RCT-Dashboard-2.0.0-release.tar.gz
+    ```
+    )成功之后在jar包所在目录下执行如下命令：
    ```
    java -jar RCT-Dashboard-2.0.0.jar
    ```
 2. 启动分析器RCT-Analyze
+   在release中下载发布包，如点击RCT-Analyze-2.0.0-release.tar.gz下载，解压(windows下可用winRAR软件解压，linux下可用命令
+    ```
+      tar xvf RCT-Analyze-2.0.0-release.tar.gz
+    ```
+    )成功之后在jar包所在目录下执行如下命令：
    ```
    java -jar -Xmx1024m -Xms300m RCT-Analyze-2.0.0.jar
    ```
    根据RDB大小，适当调整最大堆大小
 3. 进入系统
    在浏览器中访问```http://127.0.0.1:8080```,输入账号与密码，默认账号密码为**rct/rct**
- ### docker
+ ### docker（仅限linux平台）
 1. 首选启动控制中心RCT-Dashboard
   - 默认配置
     ```
