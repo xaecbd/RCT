@@ -165,15 +165,6 @@
 						</execution>
 					</executions>
 				</plugin>
-				<plugin>
-					<groupId>com.newegg.ec2</groupId>
-					<artifactId>docker-maven-plugin</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<imageName>RCT-Dashboard</imageName>
-						<tag>1.0</tag>
-					</configuration>
-				</plugin>
 			</plugins>
 		</pluginManagement>
 	</build>

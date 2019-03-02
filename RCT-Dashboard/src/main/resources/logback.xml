@@ -38,7 +38,7 @@
 		</filter>
 	</appender>
 
-	<logger name="com.newegg.ec2" level="info" />
+	<logger name="org.nesc.ecbd" level="info" />
 	<root level="info">
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
