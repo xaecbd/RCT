@@ -4,7 +4,7 @@
 
 RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台。 支持对非集群/集群rdb文件分析、Slowlog查询与监控、ClientList查询与监控。
 
-[GitHub 地址](https://github.com/xaecbd/RCT)
+
 ## 功能
 - 内存分析
 
@@ -91,3 +91,7 @@ redis version|rct version
 
   1. [代码结构介绍](./doc/代码结构介绍.md) 
   2. [设计方案](./doc/设计方案.md) 
+
+
+## TODO
+If you want to know more things,please see  [TODO](./doc/TODO.md) document.
