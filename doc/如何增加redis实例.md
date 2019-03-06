@@ -1,11 +1,11 @@
-## 添加Redis 实例
-1.  启动RCT-dashboard
-2.  输入用户名和密码，均为rct，进入redis节点管理界面
-3.  点击Add New Redis 卡片,添加redis地址和密码，添加成功后自动识别redis是否为standalone和cluster
-4.  点击每个卡片上面的图标可对对应的redis节点进行编辑和删除
-5.  点击Address和mode所在的区域可进入主页面
+## Add an instance of Redis
+1.  Start the RCT - dashboard
+2.  Enter the user name and password, both of which are RCT, and enter the redis node management interface
+3.  Click the Add New Redis card and Add the Redis address and password. After the addition, it will automatically recognize whether Redis is a standalone class and cluster
+4.  Click the icon on each card to edit and delete the corresponding redis node
+5.  Click the area of Address and mode to enter the home page
 
-## redis实例添加和编辑页面参数说明
+## Redis instance add and edit page parameter description
 1.  Redis Name：redis name
-2.  Redis Address：一般是redis的ip+port(例如 127.0.0.1:6379)
-1.  Password:redis的密码，有密码必须填写，无密码可忽略这个选项
+2.  Redis Address：Generally, it is the IP +port of redis (for example, 127.0.0.1:6379).
+1.  Redis password, the password must be filled in, no password can be ignored this option

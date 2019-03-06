@@ -1,18 +1,18 @@
 ## Client List模块介绍
 
 ### Client List
-   展示连接redis客户端的ClientIP以及IP连接的时长，最后一次执行的命令以及redis客户端的空闲时间。
+   Shows the duration of the ClientIP and IP connection to the Redis client, the last command executed, and the idle time of the Redis client.
 
 ### Statistics
-   分别从server端和client端两个维度对redis连接数的统计
+   The number of Redis connections was calculated from the two dimensions of server side and client side respectively
 
 ### Monitors
-   该模块将clientList模块统计的信息写入Eleasticsearch中，方便二次分析
+   This module writes the statistical information of the clientList module into Elasticsearch to facilitate secondary analysis
 
 #### 页面参数说明
-1.  Interval：统计信息的频率
-2.  Exetime:第一个输入框输入的数字，第二个选择框可选时间单位，表示任务执行收集的一个时间段
-3.  Status：任务执行的状态
+1.  Interval：A frequency of statistical information
+2.  Exetime:The number entered in the first input box and the unit of time in the second selection box indicate a time period during which the task was collected
+3.  Status：The state of the task execution
 
-点击Execute,确认之后job即可调度执行，点击Cancel,可将正在运行的job取消掉
+Click Execute to schedule the execution of the job after confirmation, and click Cancel to Cancel the running job
 

@@ -1,22 +1,23 @@
 # Chart模块介绍
 
-Chart模块主要是对RDB分析结果进行可视化展示
+Chart module is used for RCT to display the analysis results of RDB visually
 
-在该模块中，显示最新redis中数据分析结果，在time中会保留7次分析结果，通过更改时间，可以切换查看不同时间分析的数据报表。
+
+In this module, the latest Redis data analysis results are displayed, and the results of 7 times of analysis are retained in time. By changing the time, you can switch to view the data reports analyzed at different times.
 
 ![avatar](./screenshots/chart模块可视化功能介绍.jpg)
 
 ## 1.Key Count By Type
-不同类型的数据数量统计汇总
+Statistical summary of the number of different types of data
 ## 2.Key Memory By Type
-不同类型的数据内存字节预估统计汇总
+Different types of data memory bytes estimated statistical summary
 ## 3.Prefix Keys Count
-根据相应的规则统计key前缀的数量信息
+Count the number of key prefixes according to the corresponding rule
 ## 4.Prefix Keys Memory
-根据相应的规则统计key前缀的内存字节信息
+The memory byte information of the key prefix is counted according to the corresponding rule
 ## 5.Top 1000 Largest Keys By Perfix
-根据前缀规则统计Top 1000 前缀key
+Count the Top 1000 prefix key according to the prefix rule
 ## 6.Keys TTL Info
-根据前缀统计出设置了TTL和没有设置TTL的数据有多少
+The prefixes tell you how much data is set to TTL or not set to TTL
 ## 7.Top 1000 Largest Keys By Type
-根据不同的数据结构top出Count和Bytes最大的1000条数据
+According to different data structures, top Count and Bytes are the largest 1000 pieces of data
