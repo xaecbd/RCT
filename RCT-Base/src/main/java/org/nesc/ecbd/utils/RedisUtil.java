@@ -3,8 +3,10 @@ package org.nesc.ecbd.utils;
 import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -375,12 +377,12 @@ public class RedisUtil implements Closeable {
 	}
 
 	public List<String> standAloneRedisNodes() {
-		List<String> allNodes = new ArrayList<>();
+		Set<String> allNodes = new HashSet<>();
+		allNodes.add(hostAndPort.getHost()+":"+hostAndPort.getPort());
 		String res = jedis.info("Replication");
 		String[] resArr = res.split("\n");
 		// master or slave
 		String role = resArr[1].split(":")[1];
-		
 		if("slave".equals(role.trim())){
 			String masterHost = resArr[2].split(":")[1].trim();
 			String masterPort = resArr[3].split(":")[1].trim();
@@ -408,7 +410,8 @@ public class RedisUtil implements Closeable {
 				}
 			}
 		}
-		return allNodes;
+		List<String>nodes = new ArrayList<>(allNodes);
+		return nodes;
 	}
 
 	public List<String> clusterRedisNodes() {
