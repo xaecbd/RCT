@@ -33,7 +33,7 @@ Screenshot section mainly introduces the main functions of RCT, a series of proc
  ### jre（linux and windows）
  Before you begin, make sure you install jre1.8+ and download the release package in the release.
  
-For example, click rct-dashboard -2.0.0-release. Tar. gz to download and extract it (WinRAR software can be used to extract it under Windows, and commands can be used under Linux ``` tar xvf RCT-Dashboard-2.0.0-release.tar.gz ```)
+For example, click rct-dashboard -2.0.0-release.tar.gz to download and extract it (WinRAR software can be used to extract it under Windows, and commands can be used under Linux ``` tar xvf RCT-Dashboard-2.0.0-release.tar.gz ```)
  
 1. Preferred startup control center RCT-dashboard
    ```
@@ -44,7 +44,7 @@ For example, click rct-dashboard -2.0.0-release. Tar. gz to download and extract
    java -jar -Xmx1024m -Xms300m RCT-Analyze-2.0.0.jar
    ```
 
-   Adjust the maximum heap size according to the RDB file size ( **be sure to limit the heap size to avoid a performance impact on the online machine** ), rct-analyze is deployed to the rdb-generated machine, i.e. Redis installation machine, with one instance deployed per machine.
+   Adjust the maximum heap size according to the RDB file size ( **be sure to limit the heap size to avoid a performance impact on the online machine** ), Rct-analyze is deployed on rdb-generated machines, or redis installation machines, with one instance deployed per machine.
 
 3. Enter the system
 
@@ -65,14 +65,14 @@ For example, click rct-dashboard -2.0.0-release. Tar. gz to download and extract
     ```
      docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:2.0.0
     ```
-  - Custom configurations (before execution, please place the config/application on the host. The properties)
+  - Custom configurations (before execution, please place the config/application.properties on the host)
     ```
     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:2.0.0
     ```    
-   Adjust the maximum heap size appropriately based on the RDB size
+   Adjust the maximum heap size appropriately based on the RDB size.
 
 3. Enter the system   
-    In the browser to access ``` http://127.0.0.1:8080 ```, enter account and password, the default password for **rct/rct**
+    In the browser to access ``` http://127.0.0.1:8080 ```, enter account and password, the default password for **rct/rct**.
    
 ## Versions
 At present, the support is limited to the following versions. As for the higher version, it is under development!
@@ -83,21 +83,21 @@ redis version|rct version
 ## The user manual
 > The user manual mainly introduces the main functions of each module of RCT
 
-1. [Chart module introduction](./doc/Chart模块介绍.md)
-2. [Introduction to RDB analysis module](./doc/如何使用RDB分析工具.md)
-3. [SlowLog module introduction](./doc/如何使用slowlog分析工具.md)
-4. [ClientList模块介绍](./doc/如何使用clientList分析工具.md)
+1. [Chart module introduction](./doc/Chart_module.md)
+2. [Introduction to RDB analysis module](./doc/Introduction_to_rdb_analysis_module.md)
+3. [SlowLog module introduction](./doc/SlowLog_module_introduction.md)
+4. [Introduction to ClientList module](./doc/Introduction_to_clientList_module.md)
 
 > RCT usage tutorial
-1. [Introduction to ClientList module](./doc/如何快速使用RDB分析工具进行分析.md)
-2. [How do I add an instance of redis](./doc/如何增加redis实例.md)
+1. [Use RDB analysis tool for quick analysis](./doc/Use_rdb_analysis_tool_for_quick_analysis.md)
+2. [How do I add an instance of redis](./doc/add_an_instance_of_redis.md)
 
 
 ## Product Design
 > The design document mainly introduces the RCT architecture design and framework design
 
-  1. [Code structure introduction](./doc/代码结构介绍.md) 
-  2. [Design scheme](./doc/设计方案.md) 
+  1. [Code structure introduction](./doc/Code_structure_introduction.md) 
+  2. [Design scheme](./doc/Design_scheme.md) 
 
 
 ## TODO
