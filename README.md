@@ -9,7 +9,6 @@
 
 RCT is a one-stop platform for Redis memory structure analysis by parsing RDB files. Support for non-clustered/clustered RDB file analysis, Slowlog query, and monitoring, ClientList query and monitoring.
 
-
 ## Functions
 - Memory analysis
   >Through the RDB file analysis, Redis memory uses analysis, support multi-dimensional, multi-report. Support manual, automatic multiple ways! Provide report generation, Redis key export, and other functions!
