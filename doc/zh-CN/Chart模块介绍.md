@@ -4,7 +4,7 @@ Chart模块主要是对RDB分析结果进行可视化展示
 
 在该模块中，显示最新redis中数据分析结果，在time中会保留7次分析结果，通过更改时间，可以切换查看不同时间分析的数据报表。
 
-![avatar](./screenshots/chart模块可视化功能介绍.jpg)
+![avatar](../screenshots/chart模块可视化功能介绍.jpg)
 
 ## 1.Key Count By Type
 不同类型的数据数量统计汇总
