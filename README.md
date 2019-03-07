@@ -2,6 +2,10 @@
 
 ![](https://img.shields.io/badge/redis-%3E%3D2.6.0-green.svg) ![](https://img.shields.io/badge/SpringCloud--lightgrey.svg) ![](https://img.shields.io/badge/build-passing-yellow.svg)
 
+<div align="right">Language: :us:
+<a title="Chinese" href="./README_zh.md">:cn:</a>
+</div>
+
 RCT is a one-stop platform for Redis memory structure analysis by parsing RDB files. Support for non-clustered/clustered RDB file analysis, Slowlog query, and monitoring, ClientList query and monitoring.
 
 
@@ -13,7 +17,7 @@ RCT is a one-stop platform for Redis memory structure analysis by parsing RDB fi
 
   >Slowlog module can regularly collect slowlog information, multidimensional report summary, convenient to view the current slowlog details of the cluster
   
-- clientList
+- ClientList
 
   >ClientList module can easily and efficiently analyze and view the client connection!
    
@@ -51,7 +55,7 @@ For example, click rct-dashboard -2.0.0-release. Tar. gz to download and extract
     ```
     docker run -d  --net=host xaecbd/rct-dashboard:2.0.0
     ```
-  - Custom configurations (before execution, please placed on the host config/application properties db/data.)
+  - Custom configurations (before execution, please placed on the host config/application.properties db/data.db)
     ```
     docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:2.0.0
     ```
