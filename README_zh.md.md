@@ -1,3 +1,7 @@
+<div align="right">Language: :us:
+<a title="Chinese" href="./README_zh.md">:cn:</a>
+</div>
+
 # RCT(Redis Computed Tomography)
 
 ![](https://img.shields.io/badge/redis-%3E%3D2.6.0-green.svg) ![](https://img.shields.io/badge/SpringCloud--lightgrey.svg) ![](https://img.shields.io/badge/build-passing-yellow.svg)
