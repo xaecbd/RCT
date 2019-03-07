@@ -1,13 +1,11 @@
-<div align="right">Language: :us:
-<a title="Chinese" href="./README_zh.md">:cn:</a>
+<div align="right">Language: <a title="English" href="./README.md">:us:</a>
+:cn:
 </div>
 
 # RCT(Redis Computed Tomography)
 
 ![](https://img.shields.io/badge/redis-%3E%3D2.6.0-green.svg) ![](https://img.shields.io/badge/SpringCloud--lightgrey.svg) ![](https://img.shields.io/badge/build-passing-yellow.svg)
-<div align="right">Language: <a title="English" href="./README.md">:us:</a>
-:cn:
-</div>
+
 RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台。 支持对非集群/集群rdb文件分析、Slowlog查询与监控、ClientList查询与监控。
 
 
