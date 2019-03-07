@@ -1,5 +1,7 @@
 
-<div align="right">Language: :us:<a title="Chinese" href="./README_zh.md">:cn:</a></div>
+<div align="right">Language: :us:
+<a title="Chinese" href="./README_zh.md">:cn:</a>
+</div>
 
 # RCT(Redis Computed Tomography)
 
