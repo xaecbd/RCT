@@ -1,10 +1,9 @@
+
+<div align="right">Language: :us:<a title="Chinese" href="./README_zh.md">:cn:</a></div>
+
 # RCT(Redis Computed Tomography)
 
 ![](https://img.shields.io/badge/redis-%3E%3D2.6.0-green.svg) ![](https://img.shields.io/badge/SpringCloud--lightgrey.svg) ![](https://img.shields.io/badge/build-passing-yellow.svg)
-
-<div align="right">Language: :us:
-<a title="Chinese" href="./README_zh.md">:cn:</a>
-</div>
 
 RCT is a one-stop platform for Redis memory structure analysis by parsing RDB files. Support for non-clustered/clustered RDB file analysis, Slowlog query, and monitoring, ClientList query and monitoring.
 
