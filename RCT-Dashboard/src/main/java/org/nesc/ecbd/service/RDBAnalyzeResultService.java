@@ -128,15 +128,6 @@ public class RDBAnalyzeResultService {
 		return rdbAnalyzeResultMapper.selectByMap(map);
 	}
 
-	public boolean insert(RDBAnalyzeResult rdbAnalyzeResult){
-		try {
-			return checkResult(rdbAnalyzeResultMapper.insert(rdbAnalyzeResult));
-		} catch (Exception e) {
-			LOG.error("selectLatestResultByRedisInfoId failed!", e);
-		}
-		return false;
-	}
-
 	public boolean checkResult(int result) {
 		if (result > 0) {
 			return true;
@@ -169,7 +160,7 @@ public class RDBAnalyzeResultService {
 			rdbAnalyzeResult.setRedisInfoId(redisInfoId);
 			rdbAnalyzeResult.setScheduleId(scheduleId);
 			rdbAnalyzeResult.setResult(result);
-			insert(rdbAnalyzeResult);
+			add(rdbAnalyzeResult);
 			return rdbAnalyzeResult;
 		} catch (Exception e) {
 			LOG.error("reportDataWriteToDb write to db error!", e);
