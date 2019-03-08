@@ -1,4 +1,4 @@
-1. [upgrate redis-replicator version](https://github.com/xaecbd/RCT/issues/2)
+1. ~~[upgrate redis-replicator version](https://github.com/xaecbd/RCT/issues/2)~~
 2. rebuild **PrefixAnalyzer** prefix matching algorithm.
 3. develop rct-lite
 4. add new analyze feature
