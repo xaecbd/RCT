@@ -43,6 +43,12 @@ public class Analyzer implements CommandLineRunner {
   @Value("${eureka.client.serviceUrl.defaultZone}")
   private String serviceUrl;
   
+  @Value("${rct.analyze.key.prefix.index.location:last}")
+  private String keyPrefixIndexLocation;
+  
+  @Value("${rct.analyze.key.prefix.separators}")
+  private String keyPrefixSeparators;
+  
 
   public static String ESINDEX = null;
   public static String REGISTER_ROOT = null;
@@ -52,6 +58,8 @@ public class Analyzer implements CommandLineRunner {
   public static Integer FILTER_ItemCount;
   public static Integer MAX_EsSenderThreadNum;
   public static Integer MAX_QUEUE_SIZE;
+  public static String  KEY_PREFIX_INDEX_LOCATION;
+  public static String  KEY_PREFIX_SEPARATORS;
 
   public static void main(String[] args) {
     SpringApplication.run(Analyzer.class, args);
@@ -71,5 +79,7 @@ public class Analyzer implements CommandLineRunner {
     FILTER_ItemCount = this.filterItemCount;
     MAX_EsSenderThreadNum = this.maxSenderThread;
     MAX_QUEUE_SIZE = 1000;
+    KEY_PREFIX_INDEX_LOCATION = this.keyPrefixIndexLocation;
+    KEY_PREFIX_SEPARATORS = this.keyPrefixSeparators;
   }
 }

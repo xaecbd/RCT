@@ -116,9 +116,9 @@ public class SimpleAnalyzerManager {
 						counter += 1;
 						status = AnalyzeStatus.RUNNING;
 						lasActive = System.currentTimeMillis();
+						Long bytesSizeEstimate = RedisObjectEstimate.getRedisObjectSize(kv, Analyzer.USE_Custom_Algo);
 						@SuppressWarnings("rawtypes")
-						RDBAnalyzeInfo rbdAnalyzeInfo = new RDBAnalyzeInfo(kv,
-								RedisObjectEstimate.getRedisObjectSize(kv, Analyzer.USE_Custom_Algo));
+						RDBAnalyzeInfo rbdAnalyzeInfo = new RDBAnalyzeInfo(kv,bytesSizeEstimate);
 						for (AbstractAnalyzer analyzer : analyzers) {
 							analyzer.execute(rbdAnalyzeInfo);
 						}

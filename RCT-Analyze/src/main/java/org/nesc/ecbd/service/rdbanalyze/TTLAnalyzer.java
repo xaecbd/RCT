@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.nesc.ecbd.Analyzer;
 import org.nesc.ecbd.cache.AppCache;
 import org.nesc.ecbd.entity.AnalyzerConstant;
 import org.nesc.ecbd.entity.RDBAnalyzeInfo;
@@ -27,9 +29,21 @@ import com.moilioncircle.redis.replicator.rdb.datatype.KeyValuePair;
 public class TTLAnalyzer extends AbstractAnalyzer {
 	private Map<String, TTL> result = null;
 	private String customPrefix;
+	private String[] keyPrefixSeparatorArray = { ":", "|", "-", "_" };
+	private boolean isLastIndexOf = true;
 	private final static Pattern PATTERN = Pattern.compile("\\{\\w+\\}");
 
 	public TTLAnalyzer() {
+		String keyPrefixIndexLocation = Analyzer.KEY_PREFIX_INDEX_LOCATION;
+		if ("last".equalsIgnoreCase(keyPrefixIndexLocation)) {
+			this.isLastIndexOf = true;
+		} else {
+			this.isLastIndexOf = false;
+		}
+		String keyPrefixSeparators = Analyzer.KEY_PREFIX_SEPARATORS;
+		if (StringUtils.isNotBlank(keyPrefixSeparators)) {
+			this.keyPrefixSeparatorArray = keyPrefixSeparators.split(",");
+		}
 		this.result = new HashMap<String, TTL>();
 		this.setName("ttl");
 	}
@@ -68,25 +82,25 @@ public class TTLAnalyzer extends AbstractAnalyzer {
 			prefix = matcher.group(0) + "*";
 			flag = false;
 		}
-		// 3. :
-		if (flag && key.lastIndexOf(":") != -1) {
-			prefix = key.substring(0, key.lastIndexOf(":") + 1) + "*";
-			flag = false;
-		}
-		// 4. |
-		if (flag && key.lastIndexOf("|") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("|") + 1) + "*";
-			flag = false;
-		}
-		// 5. _
-		if (flag && key.lastIndexOf("_") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("_") + 1) + "*";
-			flag = false;
-		}
-		// 6. -
-		if (flag && key.lastIndexOf("-") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("-") + 1) + "*";
-			flag = false;
+		// 自定义分隔符，默认分隔符":", "|", "_", "-"
+		if (flag) {
+			if (isLastIndexOf) {
+				for (int i = 0; i < keyPrefixSeparatorArray.length; i++) {
+					if (key.lastIndexOf(keyPrefixSeparatorArray[i]) != -1) {
+						prefix = key.substring(0, key.lastIndexOf(keyPrefixSeparatorArray[i])+1) + "*";
+						flag = false;
+						break;
+					}
+				}
+			} else {
+				for (int i = 0; i < keyPrefixSeparatorArray.length; i++) {
+					if (key.indexOf(keyPrefixSeparatorArray[i]) != -1) {
+						prefix = key.substring(0, key.indexOf(keyPrefixSeparatorArray[i]+1)) + "*";
+						flag = false;
+						break;
+					}
+				}
+			}
 		}
 		if(!flag) {
 			appendResult(prefix, kv);

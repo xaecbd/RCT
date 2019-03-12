@@ -16,7 +16,7 @@ public class RDBAnalyzeInfo<T> {
 
 	private KeyValuePair<T> kv;
 
-	public RDBAnalyzeInfo(KeyValuePair<T> kv,Long bytesSize) {
+	public RDBAnalyzeInfo(KeyValuePair<T> kv, Long bytesSize) {
 		this.bytesSize = bytesSize;
 		this.kv = kv;
 	}

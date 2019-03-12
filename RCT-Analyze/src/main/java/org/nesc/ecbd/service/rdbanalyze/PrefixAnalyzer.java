@@ -9,6 +9,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+import org.nesc.ecbd.Analyzer;
 import org.nesc.ecbd.cache.AppCache;
 import org.nesc.ecbd.entity.AnalyzerConstant;
 import org.nesc.ecbd.entity.RDBAnalyzeInfo;
@@ -27,9 +29,22 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 
 	private Map<String, PrefixSizeCount> result = null;
 	private String customPrefix;
+	private String[] keyPrefixSeparatorArray = { ":", "|", "-", "_" };
+	private boolean isLastIndexOf = true;
 	private final static Pattern PATTERN = Pattern.compile("\\{\\w+\\}");
 
 	public PrefixAnalyzer() {
+		String keyPrefixIndexLocation = Analyzer.KEY_PREFIX_INDEX_LOCATION;
+		if ("last".equalsIgnoreCase(keyPrefixIndexLocation)) {
+			this.isLastIndexOf = true;
+		} else {
+			this.isLastIndexOf = false;
+		}
+		String keyPrefixSeparators = Analyzer.KEY_PREFIX_SEPARATORS;
+		if (StringUtils.isNotBlank(keyPrefixSeparators)) {
+			this.keyPrefixSeparatorArray = keyPrefixSeparators.split(",");
+		}
+
 		this.result = new HashMap<String, PrefixSizeCount>();
 		this.setName("prefix");
 	}
@@ -43,7 +58,7 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 
 	@Override
 	public void execute(RDBAnalyzeInfo<?> rdbAnalyzeInfo) {
-		
+
 		KeyValuePair<?> kv = rdbAnalyzeInfo.getKv();
 		if (this.result == null) {
 			this.result = new HashMap<String, PrefixSizeCount>();
@@ -70,27 +85,28 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 			prefix = matcher.group(0) + "*";
 			flag = false;
 		}
-		// 3. :
-		if (flag && key.lastIndexOf(":") != -1) {
-			prefix = key.substring(0, key.lastIndexOf(":") + 1) + "*";
-			flag = false;
+		// 自定义分隔符，默认分隔符":", "|", "_", "-"
+		if (flag) {
+			if (isLastIndexOf) {
+				for (int i = 0; i < keyPrefixSeparatorArray.length; i++) {
+					if (key.lastIndexOf(keyPrefixSeparatorArray[i]) != -1) {
+						prefix = key.substring(0, key.lastIndexOf(keyPrefixSeparatorArray[i])+1) + "*";
+						flag = false;
+						break;
+					}
+				}
+			} else {
+				for (int i = 0; i < keyPrefixSeparatorArray.length; i++) {
+					if (key.indexOf(keyPrefixSeparatorArray[i]) != -1) {
+						prefix = key.substring(0, key.indexOf(keyPrefixSeparatorArray[i])+1) + "*";
+						flag = false;
+						break;
+					}
+				}
+			}
 		}
-		// 4. |
-		if (flag && key.lastIndexOf("|") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("|") + 1) + "*";
-			flag = false;
-		}
-		// 5. _
-		if (flag && key.lastIndexOf("_") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("_") + 1) + "*";
-			flag = false;
-		}
-		// 6. -
-		if (flag && key.lastIndexOf("-") != -1) {
-			prefix = key.substring(0, key.lastIndexOf("-") + 1) + "*";
-			flag = false;
-		}
-		if(!flag) {
+
+		if (!flag) {
 			appendResult(prefix, rdbAnalyzeInfo);
 		}
 	}
@@ -102,7 +118,7 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 				return;
 			}
 			Set<String> analyzeResult = generatePrefixResult(this.port);
-			
+
 			if (AppCache.reportCacheMap.containsKey(AnalyzerConstant.PREFIX_ANALYZER + "")) {
 				Set<String> oldAnalyzeResult = AppCache.reportCacheMap.get(AnalyzerConstant.PREFIX_ANALYZER + "");
 				oldAnalyzeResult.addAll(analyzeResult);
@@ -110,8 +126,8 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 			} else {
 				AppCache.reportCacheMap.put(AnalyzerConstant.PREFIX_ANALYZER + "", analyzeResult);
 			}
-			
-			//this.report2ES(analyzeResult);
+
+			// this.report2ES(analyzeResult);
 			result = null;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -149,7 +165,6 @@ public class PrefixAnalyzer extends AbstractAnalyzer {
 		}
 		this.result.put(prefix, prefixSizeCount);
 	}
-
 }
 
 class PrefixSizeCount {
