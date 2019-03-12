@@ -78,7 +78,7 @@ At present, the support is limited to the following versions. As for the higher 
 
 redis version|rct version
 ---|---
-[2.6-4.0.x]|2.0
+[2.6-5.0.3]|2.X
 ## The user manual
 > The user manual mainly introduces the main functions of each module of RCT
 
