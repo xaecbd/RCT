@@ -50,6 +50,8 @@ export default class RDBMainPage extends Component {
       cronData: [],
       loading: false,
       disable: true,
+      disName: 'Add',
+      autoDiasble:true,
       information: {
         id: '',
         autoAnalyze: false,
@@ -61,9 +63,10 @@ export default class RDBMainPage extends Component {
         analyzer: [],
         name: '',
         status: false,
-        disName: 'Add',
+        
         pid,
       },
+      endInformation:{},
     };
   }
 
@@ -97,11 +100,11 @@ export default class RDBMainPage extends Component {
       .post('/test_corn', querybody)
       .then((response) => {
         if (response.data.code === 200 && response.data.data.length > 0) {
-            const data = this.state.information;
+            const data = this.state.endInformation;
             data.autoAnalyze = true;
             this.setState({
                  cronData: response.data.data,
-                 information: data,
+                 endInformation: data,
 
             });
         }
@@ -135,6 +138,23 @@ export default class RDBMainPage extends Component {
        }).catch((error) => {
          console.log(error);
        });
+  }
+
+  autoChange = (values) =>{
+     const data = this.state.endInformation;
+     data.autoAnalyze = values;
+     if(values){
+         this.setState({
+             disable:false,
+         });
+     }else{
+        this.setState({
+            disable:true,
+        });
+     }
+     this.setState({
+         endInformation:data
+     });
   }
 
   getCronList =(values) => {
@@ -173,27 +193,23 @@ export default class RDBMainPage extends Component {
             this.state.information.analyzer = this.changeAnalyzeToArray(res.data.data.info.analyzer);
             this.state.information.name = res.data.data.info.redisInfo.name;
             this.state.information.status = res.data.data.status;
-            this.state.information.disName = 'Edit';
-            // if (res.data.data.info.schedule.trim()) {
-            //     this.setState({
-            //        disable: false,
-            //     });
-            // }
             if (res.data.data.info.schedule) {
+                // console.log('comes');
                 this.setState({
-                    disable: false,
+                    autoDiasble: false,
                 });
                 const querybody = { schedule: res.data.data.info.schedule.trim() };
                 this.getCronList(querybody);
             }
             this.setState({
               information: this.state.information,
+              disName:'Edit',
             });
           } else {
-            this.state.information.disName = 'Add';
             this.setState({
               information: this.state.information,
               openVisable: true,
+              disName:'Add',
             });
           }
         }
@@ -207,15 +223,18 @@ export default class RDBMainPage extends Component {
    this.props.history.push('/rdb_progress');
  }
 
+
  handleOpenEditPanel = () => {
+   var obj = Object.create(this.state.information);
    this.setState({
      openVisable: true,
+     endInformation:obj,
    });
  }
 
  handleCloseEditPanel = () => {
    this.setState({
-     openVisable: false,
+     openVisable: false
    });
  }
 
@@ -223,22 +242,33 @@ export default class RDBMainPage extends Component {
  validateFields = () => {
    const { validateAll } = this.form;
    validateAll((errors, values) => {
-     if (!errors) {
+     if (!errors) { 
        const data = values;
-       data.schedule = data.schedule.trim();
        data.analyzer = data.analyzer.toString();
-       if (data.schedule.trim()) {
-           this.setState({
-             disable: false,
-           });
-       } else {
-           this.setState({
-              disable: true,
-           });
-       }
-       if (data.disName === 'Add') {
+       if(data.schedule){
+        this.setState({
+            autoDiasble: false,
+          });
+       }else{
+        this.setState({
+            autoDiasble: true,
+         });
+       }       
+       this.state.information.analyzer = data.analyzer;
+       this.state.information.autoAnalyze = data.autoAnalyze;
+       this.state.information.schedule = data.schedule;
+       this.state.information.dataPath = data.dataPath;
+       this.state.information.prefixes = data.prefixes;
+       this.state.information.report   = data.report;
+       this.state.information.mailTo   = data.mailTo;
+       
+       this.setState({
+        information:this.state.information,      
+       });
+
+       if (this.state.disName === 'Add') {
          axiosInstance
-           .post('/rdb', data)
+           .post('/rdb', this.state.information)
            .then((res) => {
              if (res.data.code === 200) {
                const response = this.state.information;
@@ -249,6 +279,7 @@ export default class RDBMainPage extends Component {
                  information: response,
                  disName: 'Edit',
                });
+               this.getData();
              } else {
                Feedback.toast.error(res.data.message);
              }
@@ -257,13 +288,14 @@ export default class RDBMainPage extends Component {
            });
        } else {
          axiosInstance
-           .put('/rdb', data)
+           .put('/rdb', this.state.information)
            .then((res) => {
              if (res.data.code === 200) {
                Feedback.toast.success(res.data.message);
                this.setState({
                  openVisable: false,
                });
+               this.getData();
              } else {
                Feedback.toast.error(res.data.message);
              }
@@ -363,16 +395,16 @@ export default class RDBMainPage extends Component {
 
 
   Selects(value) {
-    const data = this.state.information;
+    const data = this.state.endInformation;
     data.analyzer = value;
     this.setState({
-        information: data,
+        endInformation: data,
     });
   }
 
   render() {
     let statusIcon;
-    if (this.state.information.disName === 'Edit') {
+    if (this.state.disName === 'Edit') {
       if (this.state.information.status) {
         statusIcon = (
           <div>
@@ -404,10 +436,10 @@ export default class RDBMainPage extends Component {
           closable="esc,mask,close"
           onCancel={this.handleCloseEditPanel}
           onClose={this.handleCloseEditPanel}
-          title={this.state.information.disName}
+          title={this.state.disName}
         >
           <FormBinderWrapper
-            value={this.state.information}
+            value={this.state.endInformation}
             ref={(c) => { this.form = c; }}
           >
             <div>
@@ -418,7 +450,7 @@ export default class RDBMainPage extends Component {
                 </Col>
                 <Col xxs="16" s="15" l="14">
                   <FormBinder type="boolean" name="autoAnalyze">
-                    <Switch defaultChecked={this.state.information.autoAnalyze} disabled={this.state.disable} />
+                    <Switch defaultChecked={this.state.endInformation.autoAnalyze}    onChange={(values) => { this.autoChange(values); }}/>
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="autoAnalyze" />
@@ -431,8 +463,16 @@ export default class RDBMainPage extends Component {
                   <span>Schedule:</span>
                 </Col>
                 <Col xxs="16" s="15" l="14">
-                  <FormBinder>
-                    <Input name="schedule" placeholder="0 0 1 ? * L" onChange={e => this.onScheduleChange(e)} />
+                  <FormBinder  validator={(rule, value, callback) => {
+                        const errors = [];
+                        if (this.state.endInformation.autoAnalyze) {
+                          if (!value) {
+                            errors.push('when you enable the autoAnalyze,you should input this cron expression ');
+                          }
+                        }
+                        callback(errors);
+                      }}>
+                    <Input name="schedule" placeholder="0 0 1 ? * L" onChange={e => this.onScheduleChange(e)}  disabled={this.state.disable}  />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="schedule" />
@@ -455,7 +495,7 @@ export default class RDBMainPage extends Component {
                 <Col xxs="16" s="15" l="14">
                   <FormBinder>
                     <CheckboxGroup dataSource={checkboxDataMap}
-                      value={this.changeAnalyzeToArray(this.state.information.analyzer)}
+                      value={this.changeAnalyzeToArray(this.state.endInformation.analyzer)}
                       name="analyzer"
                       onChange={e => this.Selects(e)}
                     />
@@ -484,7 +524,7 @@ export default class RDBMainPage extends Component {
                 <Col xxs="16" s="15" l="14">
                   <FormBinder validator={(rule, value, callback) => {
                         const errors = [];
-                        if (this.state.information.analyzer.toString().indexOf(5) >= 0) {
+                        if (this.state.endInformation.analyzer.toString().indexOf(5) >= 0) {
                           if (value.trim() === '') {
                             errors.push('if you choose the ExportKeyByPrefix,you must input the prefix ');
                           }
@@ -506,7 +546,7 @@ export default class RDBMainPage extends Component {
                 </Col>
                 <Col xxs="16" s="15" l="14">
                   <FormBinder type="boolean" name="report">
-                    <Switch defaultChecked={this.state.information.report} />
+                    <Switch defaultChecked={this.state.endInformation.report} />
                   </FormBinder>
                   <div style={styles.formErrorWrapper}>
                     <FormError name="report" />
@@ -520,9 +560,16 @@ export default class RDBMainPage extends Component {
                 </Col>
                 <Col xxs="16" s="15" l="14">
                   <FormBinder
-                    required
                     name="mailTo"
-                    message="Required"
+                    validator={(rule, value, callback) => {
+                        const errors = [];
+                        if (this.state.endInformation.report) {
+                          if (value.trim() === '') {
+                            errors.push('please input your email address when you want to send email');
+                          }
+                        }
+                        callback(errors);
+                      }}
                   >
                     <Input multiple maxLength={1000} rows={4} />
                   </FormBinder>
@@ -607,7 +654,7 @@ export default class RDBMainPage extends Component {
                   <Col span="4"><span style={redisInfoStyle.label}>Report: </span></Col>
                   <Col span="10" style={redisInfoStyle.value_col}>
                     <span style={redisInfoStyle.value}>
-                      {this.state.information.report.toString()}
+                      {this.state.information.report}
                     </span>
                   </Col>
                   <Col span="4" hidden />
@@ -646,7 +693,7 @@ export default class RDBMainPage extends Component {
                   unCheckedChildren="OFF"
                   checked={this.state.information.autoAnalyze}
                   onChange={(values) => { this.autoAnalyzeChange(values); }}
-                  disabled={this.state.disable}
+                  disabled={this.state.autoDiasble}
                 />
               </span>
             </Col>
@@ -655,7 +702,7 @@ export default class RDBMainPage extends Component {
             </Col>
             <Col span="2">
               <Button type="primary" onClick={() => this.handleOpenEditPanel()}>
-                <Icon type="survey" />{this.state.information.disName}
+                <Icon type="survey" />{this.state.disName}
               </Button>
             </Col>
           </Row>
