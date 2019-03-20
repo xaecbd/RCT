@@ -437,6 +437,7 @@ export default class RDBMainPage extends Component {
           onCancel={this.handleCloseEditPanel}
           onClose={this.handleCloseEditPanel}
           title={this.state.disName}
+          language="en-us"
         >
           <FormBinderWrapper
             value={this.state.endInformation}
