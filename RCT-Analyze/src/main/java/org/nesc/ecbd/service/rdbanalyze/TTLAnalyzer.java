@@ -95,7 +95,7 @@ public class TTLAnalyzer extends AbstractAnalyzer {
 			} else {
 				for (int i = 0; i < keyPrefixSeparatorArray.length; i++) {
 					if (key.indexOf(keyPrefixSeparatorArray[i]) != -1) {
-						prefix = key.substring(0, key.indexOf(keyPrefixSeparatorArray[i]+1)) + "*";
+						prefix = key.substring(0, key.indexOf(keyPrefixSeparatorArray[i])+1) + "*";
 						flag = false;
 						break;
 					}
