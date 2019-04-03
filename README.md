@@ -53,20 +53,20 @@ For example, click rct-dashboard -2.0.0-release.tar.gz to download and extract i
 1. Preferred startup control center RCT-dashboard
   - Default Settings
     ```
-    docker run -d  --net=host xaecbd/rct-dashboard:2.0.0
+    docker run -d  --net=host xaecbd/rct-dashboard:latest
     ```
   - Custom configurations (before execution, please placed on the host config/application.properties db/data.db)
     ```
-    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:2.0.0
+    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:latest
     ```
 2. Start the analyzer rct-analyze
   - Default Settings
     ```
-     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:2.0.0
+     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:latest
     ```
   - Custom configurations (before execution, please place the config/application.properties on the host)
     ```
-    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:2.0.0
+    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:latest
     ```    
    Adjust the maximum heap size appropriately based on the RDB size.
 
