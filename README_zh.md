@@ -32,8 +32,7 @@ RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台�
  ## 快速开始
 
  ### jre（linux和windows）
- 在开始之前，首先确保安装jre1.8+,在release中下载发布包。
- 
+ 在开始之前，首先确保安装jre1.8+,在release中下载**最新版本**发布包。
  如点击RCT-Dashboard-2.0.0-release.tar.gz下载，解压(windows下可用winRAR软件解压，linux下可用命令```tar xvf RCT-Dashboard-2.0.0-release.tar.gz ```)
  
  如点击RCT-Analyze-2.0.0-release.tar.gz下载，解压(windows下可用winRAR软件解压，linux下可用命令
@@ -53,20 +52,20 @@ RCT 是一个通过解析rdb文件对redis内存结构分析的一站式平台�
 1. 首选启动控制中心RCT-Dashboard
   - 默认配置
     ```
-    docker run -d  --net=host xaecbd/rct-dashboard:2.0.0
+    docker run -d  --net=host xaecbd/rct-dashboard:latest
     ```
   - 自定义配置(在执行之前，请先在宿主机上放置config/application.properties db/data.db)
     ```
-    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:2.0.0
+    docker run -d  -v /opt/app/rct/rct-dashboard/config:/opt/app/rct/rct-dashboard/config -v /opt/app/rct/rct-dashboard/db:/opt/app/rct/rct-dashboard/db --net=host xaecbd/rct-dashboard:latest
     ```
 2. 启动分析器RCT-Analyze
   - 默认配置
     ```
-     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:2.0.0
+     docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" --net=host xaecbd/rct-analyze:latest
     ```
   - 自定义配置(在执行之前，请先在宿主机上放置config/application.properties)
     ```
-    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:2.0.0
+    docker run -d -e "JAVA_OPTIONS=-Xmx1024m -Xms300m" -v /opt/app/rct/rct-analyze/config:/opt/app/rct/rct-analyze/config -v /data/redis/redis_cluster:/data/redis/redis_cluster --net=host xaecbd/rct-analyze:latest
     ```
     根据RDB大小，适当调整最大堆大小
 3. 进入系统
