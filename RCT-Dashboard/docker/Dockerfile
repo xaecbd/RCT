@@ -10,7 +10,7 @@ COPY --from=hengyunabc/arthas:latest /opt/arthas /opt/arthas
 ENV BASE_DIR /opt/app/rct/rct-dashboard
 WORKDIR ${BASE_DIR}
 ENV RCT_NAME RCT-Dashboard
-ENV VERSION 2.0.0
+ENV VERSION 2.1.1
 RUN apk upgrade --update && \
     apk add --update curl  bash
 RUN cd ${BASE_DIR} && \

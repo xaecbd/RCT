@@ -11,7 +11,7 @@ RUN apk upgrade --update && \
 ENV BASE_DIR /opt/app/rct/rct-analyze
 WORKDIR ${BASE_DIR}
 ENV RCT_NAME RCT-Analyze
-ENV VERSION 2.0.0
+ENV VERSION 2.1.1
 RUN apk upgrade --update && \
     apk add --update curl  bash
 RUN cd ${BASE_DIR} && \
