@@ -1,5 +1,7 @@
 package org.nesc.ecbd.cache;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -13,5 +15,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public class AppCache {
 
 	public static Map<String, Set<String>> reportCacheMap = new ConcurrentHashMap<String, Set<String>>();
+	public static List<Long> redisUsedMems = new ArrayList<Long>();
 
 }

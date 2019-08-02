@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.nesc.ecbd.Analyzer;
+import org.nesc.ecbd.cache.AppCache;
 import org.nesc.ecbd.entity.AnalyzeStatus;
 import org.nesc.ecbd.entity.RDBAnalyzeInfo;
 import org.nesc.ecbd.service.rdbanalyze.AbstractAnalyzer;
@@ -23,7 +24,9 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 import com.moilioncircle.redis.replicator.RedisReplicator;
 import com.moilioncircle.redis.replicator.Replicator;
+import com.moilioncircle.redis.replicator.rdb.AuxFieldListener;
 import com.moilioncircle.redis.replicator.rdb.RdbListener;
+import com.moilioncircle.redis.replicator.rdb.datatype.AuxField;
 import com.moilioncircle.redis.replicator.rdb.datatype.KeyValuePair;
 
 /**
@@ -103,6 +106,21 @@ public class SimpleAnalyzerManager {
 			analyzers.forEach(analyzer -> analyzer.init(params));
 
 			replicator = new RedisReplicator("redis://" + realRDBPath);
+
+			String used_mem_flag = "used-mem";
+			AppCache.redisUsedMems.clear();
+			replicator.addAuxFieldListener(new AuxFieldListener() {
+				@Override
+				public void handle(Replicator replicator, AuxField auxField) {
+					String auxKey = auxField.getAuxKey();
+					if (used_mem_flag.equalsIgnoreCase(auxKey)) {
+						Long used_mem = Long.parseLong(auxField.getAuxValue());
+						AppCache.redisUsedMems.add(used_mem);
+					}
+
+				}
+			});
+
 			replicator.addRdbListener(new RdbListener.Adaptor() {
 
 				@SuppressWarnings("unchecked")
@@ -118,7 +136,7 @@ public class SimpleAnalyzerManager {
 						lasActive = System.currentTimeMillis();
 						Long bytesSizeEstimate = RedisObjectEstimate.getRedisObjectSize(kv, Analyzer.USE_Custom_Algo);
 						@SuppressWarnings("rawtypes")
-						RDBAnalyzeInfo rbdAnalyzeInfo = new RDBAnalyzeInfo(kv,bytesSizeEstimate);
+						RDBAnalyzeInfo rbdAnalyzeInfo = new RDBAnalyzeInfo(kv, bytesSizeEstimate);
 						for (AbstractAnalyzer analyzer : analyzers) {
 							analyzer.execute(rbdAnalyzeInfo);
 						}
@@ -131,6 +149,7 @@ public class SimpleAnalyzerManager {
 				}
 
 			});
+
 			replicator.open();
 			String ending = AnalyzeStatus.CANCELED.equals(status) ? " Canceled" : " Done";
 
