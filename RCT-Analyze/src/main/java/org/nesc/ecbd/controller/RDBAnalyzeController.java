@@ -5,6 +5,7 @@ import org.nesc.ecbd.cache.AppCache;
 import org.nesc.ecbd.entity.AnalyzeStatus;
 import org.nesc.ecbd.entity.ScheduleInfo;
 import org.nesc.ecbd.service.RDBAnalyzeService;
+import org.nesc.ecbd.service.ReportService;
 import org.nesc.ecbd.worker.AnalyzerWorker;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,6 +28,8 @@ public class RDBAnalyzeController {
 
 	@Autowired
 	RDBAnalyzeService rdbAnalyzeService;
+	@Autowired
+	ReportService reportService;
 
 	/**
 	 * 初始化配置信息并进行检查
@@ -138,7 +141,7 @@ public class RDBAnalyzeController {
 	
 	@RequestMapping(value="/report",method = RequestMethod.GET)
 	public String report() {
-		String report = JSONObject.toJSONString(AppCache.reportCacheMap);
+		String report = reportService.fixReportData();
 		return report;
 	}
 

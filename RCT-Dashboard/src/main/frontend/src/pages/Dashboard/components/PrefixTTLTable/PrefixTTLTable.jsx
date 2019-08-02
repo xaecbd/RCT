@@ -107,23 +107,24 @@ export default class PrefixTTLTable extends Component {
   }
   onSort(value, order) {
     let dataSource = [];
-    if ((typeof value) !== 'number') {
-      dataSource = this.state.totalData.sort((a, b) => {
-        if (order === 'asc') {
-          return a[value].localeCompare(b[value]);
-        } else if (order === 'desc') {
-          return b[value].localeCompare(a[value]);
-        }
-      });
-    } else {
-      dataSource = this.state.totalData.sort((a, b) => {
-        if (order === 'asc') {
-          return a[value] - b[value];
-        } else if (order === 'desc') {
-          return b[value] - a[value];
-        }
-      });
+    if(value === 'TTL' || value==='noTTL'){
+        dataSource = this.state.totalData.sort((a, b) => {
+            if (order === 'asc') {
+              return a[value] - b[value];
+            } else if (order === 'desc') {
+              return b[value] - a[value];
+            }
+          });
+    }else{
+        dataSource = this.state.totalData.sort((a, b) => {
+            if (order === 'asc') {
+              return a[value].localeCompare(b[value]);
+            } else if (order === 'desc') {
+              return b[value].localeCompare(a[value]);
+            }
+          });
     }
+    
     this.setState({ dataSource });
     this.getPageData(dataSource);
   }
