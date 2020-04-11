@@ -87,25 +87,52 @@ public class RDBAnalyzeService {
 		File rdbFile = null;
 		String basePath = scheduleInfo.getDataPath().endsWith("/") ? scheduleInfo.getDataPath()
 				: scheduleInfo.getDataPath() + "/";
-		String rdbPath = null;
 		JSONObject msg = new JSONObject();
-		for (String port : scheduleInfo.getPorts()) {
-			rdbPath = basePath + port + "/dump.rdb";
-			rdbFile = new File(rdbPath);
-			if (!rdbFile.exists()) {
-				allPathValid = false;
-				msg.put(port, rdbPath + " NOT EXIST!");
-			} else {
-				rdbPaths.put(port, rdbPath);
-			}
-		}
+		String rdbPath = null;
+        for (String port : scheduleInfo.getPorts()) {
+			// rdb file root path
+			rdbPath = basePath + port;
+			rdbFile = findRDBFile(rdbPath);
+            if (rdbFile == null) {
+                allPathValid = false;
+                msg.put(port, "In root path [" +rdbPath+ "] not find rdb file!");
+            } else {
+                rdbPaths.put(port, rdbFile.getPath());
+            }
+//			basePath =  scheduleInfo.getDataPath().endsWith("/") ? scheduleInfo.getDataPath()
+//					: scheduleInfo.getDataPath() + "/";
+        }
 		ret.put("checked", allPathValid);
 		if (!allPathValid) {
 			ret.put("message", msg);
+//            setStatus(AnalyzeStatus.ERROR);
 			return ret;
 		}
 		setStatus(AnalyzeStatus.READY);
 		return ret;
+	}
+
+	/**
+	 * 在指定目录(rootPath)下查找第一个以rdb文件
+	 * @param rootPath 在此路径下寻找
+	 * @return 如果找到rdb文件，返回文件，否则返回空
+	 */
+	private File findRDBFile(String rootPath){
+		File rdbDir = new File(rootPath);
+		File[] files = rdbDir.listFiles();
+		if(files != null){
+			for(File file : files){
+				if(file.getPath().endsWith(".rdb")){
+					return file;
+				}else if(file.isDirectory()){
+					File rFile = findRDBFile(file.getPath());
+					if(rFile != null){
+						return rFile;
+					}
+				}
+			}
+		}
+		return null;
 	}
 
 	/**
